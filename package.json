@@ -1,6 +1,6 @@
 {
   "name": "ndx-sync",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "synchronize servers for ndx-framework",
   "main": "build/index.js",
   "scripts": {

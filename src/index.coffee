@@ -55,7 +55,7 @@ module.exports = (ndx) ->
         server.emit 'delete', args
         callback()
     io = require 'socket.io-client'
-    socket = io.connect 'http://' + ndx.host, reconnect: true
+    socket = io.connect ndx.host, reconnect: true
     socket.on 'connect', ->
       console.log 'client connected'
       socket.emit 'server', id:ndx.id

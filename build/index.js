@@ -84,7 +84,7 @@
         });
       });
       io = require('socket.io-client');
-      socket = io.connect('http://' + ndx.host, {
+      socket = io.connect(ndx.host, {
         reconnect: true
       });
       socket.on('connect', function() {
