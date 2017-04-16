@@ -59,29 +59,32 @@
           return serverSockets.splice(serverSockets.indexOf(socket), 1);
         }
       });
-      ndx.database.on('update', function(args) {
+      ndx.database.on('update', function(args, cb) {
         var servers;
         servers = getServersToNotify('update', args);
-        return async.each(servers, function(server, callback) {
+        async.each(servers, function(server, callback) {
           server.emit('update', args);
           return callback();
         });
+        return cb();
       });
-      ndx.database.on('insert', function(args) {
+      ndx.database.on('insert', function(args, cb) {
         var servers;
         servers = getServersToNotify('insert', args);
-        return async.each(servers, function(server, callback) {
+        async.each(servers, function(server, callback) {
           server.emit('insert', args);
           return callback();
         });
+        return cb();
       });
-      ndx.database.on('delete', function(args) {
+      ndx.database.on('delete', function(args, cb) {
         var servers;
         servers = getServersToNotify('delete', args);
-        return async.each(servers, function(server, callback) {
+        async.each(servers, function(server, callback) {
           server.emit('delete', args);
           return callback();
         });
+        return cb();
       });
       io = require('socket.io-client');
       socket = io.connect(ndx.host, {

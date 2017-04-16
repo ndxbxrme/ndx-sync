@@ -39,21 +39,24 @@ module.exports = (ndx) ->
     ndx.socket.on 'disconnect', (socket) ->
       if socket.serverId
         serverSockets.splice serverSockets.indexOf(socket), 1
-    ndx.database.on 'update', (args) ->
+    ndx.database.on 'update', (args, cb) ->
       servers = getServersToNotify 'update', args
       async.each servers, (server, callback) ->
         server.emit 'update', args
         callback()
-    ndx.database.on 'insert', (args) ->
+      cb()
+    ndx.database.on 'insert', (args, cb) ->
       servers = getServersToNotify 'insert', args
       async.each servers, (server, callback) ->
         server.emit 'insert', args
         callback()
-    ndx.database.on 'delete', (args) ->
+      cb()
+    ndx.database.on 'delete', (args, cb) ->
       servers = getServersToNotify 'delete', args
       async.each servers, (server, callback) ->
         server.emit 'delete', args
         callback()
+      cb()
     io = require 'socket.io-client'
     socket = io.connect ndx.host, reconnect: true
     socket.on 'connect', ->
